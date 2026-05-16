@@ -1,103 +1,155 @@
-# ChromaCraft 🎨
+<div align="center">
 
-Herramienta profesional de diseño de paletas de color — **Fase 1 (Web)**.
+<img src="Assets/iyiris-readme.png" alt="iyiris" width="160" />
 
-## Stack
+<br/>
 
-| Capa | Tecnología |
-|------|------------|
-| Framework | SvelteKit 2 + Svelte 4 |
-| Lenguaje | TypeScript estricto |
-| Estilos | Tailwind CSS 3 |
-| Color engine | chroma.js 2 |
-| Persistencia | localStorage (sin backend) |
-| Build | Vite 5 |
+# iyiris
 
-## Características
+**Herramienta profesional de diseño de paletas de color**
 
-- **Paletas automáticas** — análogos, complementarios, triádicos, monocromáticos
-- **Contraste WCAG** — ratio en tiempo real, niveles AA / AAA para texto normal, grande y UI
-- **Simulación daltonismo** — protanopía, deuteranopía, tritanopía, acromatopsia
-- **Vista previa UI** — botones, cards, navbar, badges en tema claro y oscuro
-- **Exportación** — CSS custom properties, Tailwind config, JSON, tabla HEX/RGB/HSL
-- **Favoritos** — guarda y carga paletas desde localStorage
+*Colores para todos — sin backend, sin cuenta, sin límites*
+
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/▶%20DEMO%20EN%20VIVO-palert--mocha.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://palert-mocha.vercel.app)
+[![GitHub](https://img.shields.io/badge/CÓDIGO-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JuanEstebanHerreraH/Iyiris)
+
+<br/>
+
+![SvelteKit](https://img.shields.io/badge/SvelteKit_2.0-FF3E00?style=flat-square&logo=svelte&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript_5.0-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Tauri](https://img.shields.io/badge/Tauri_2.0-24C8D8?style=flat-square&logo=tauri&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+![No backend](https://img.shields.io/badge/Sin_backend-10B981?style=flat-square&logoColor=white)
+
+</div>
 
 ---
 
-## Setup rápido
+<div align="center">
+
+### ¿Qué es iyiris?
+
+</div>
+
+**iyiris** toma un color base y genera al instante paletas armónicas, verifica accesibilidad WCAG, simula visión con daltonismo y exporta todo listo para producción. Corre completamente en el navegador — ningún dato sale de tu dispositivo.
+
+---
+
+## ✦ Características
+
+<br/>
+
+| | Función | Descripción |
+|:---:|:---|:---|
+| 🎨 | **Paletas automáticas** | Análogos · Complementarios · Triádicos · Monocromáticos desde un color base |
+| ⚖️ | **Contraste WCAG 2.1** | Ratio en tiempo real · Niveles AA / AAA para texto normal, grande y UI |
+| 👁️ | **Simulación daltonismo** | Protanopía · Deuteranopía · Tritanopía · Acromatopsia — comparativa lado a lado |
+| 🖥️ | **Vista previa UI** | Paleta aplicada a navbar, cards, botones y badges en tema claro y oscuro |
+| 📦 | **Exportar** | CSS custom properties · Tailwind config · JSON · Tabla HEX / RGB / HSL / CMYK |
+| ⭐ | **Favoritos** | Guarda y carga paletas entre sesiones — sin servidor, solo `localStorage` |
+| 📱 | **Responsive** | Diseñado para desktop y móvil |
+| 📲 | **App Android** | APK compilado con Tauri 2.0 via GitHub Actions |
+
+---
+
+## ✦ Formatos de color
+
+```
+HEX    →  #6366f1                        Web · CSS · diseño digital
+RGB    →  rgb(99, 102, 241)              Pantallas · CSS moderno
+HSL    →  hsl(239°, 84%, 67%)            Ajustes intuitivos · CSS moderno
+CMYK   →  cmyk(59%, 58%, 0%, 5%)        🖨  Imprenta · diseño editorial
+```
+
+## ✦ Correr localmente
 
 ```bash
-# 1. Instalar dependencias
+# 1. Clonar
+git clone https://github.com/JuanEstebanHerreraH/Iyiris.git
+cd Iyiris
+
+# 2. Instalar
 npm install
 
-# 2. Servidor de desarrollo
+# 3. Desarrollo  →  http://localhost:5173
 npm run dev
 
-# 3. Build de producción
+# 4. Build de producción
 npm run build
-
-# 4. Vista previa del build
-npm run preview
 ```
-
-La app queda en **http://localhost:5173**
 
 ---
 
-## Estructura del proyecto
+## ✦ Stack técnico
+
+| Capa | Tecnología | Rol |
+|---|---|---|
+| Framework | SvelteKit 2 + Svelte 4 | UI compilada, sin Virtual DOM |
+| Lenguaje | TypeScript estricto | Tipado en toda la lógica de color |
+| Estilos | Tailwind CSS 3 | Utilidades · dark mode · responsive |
+| Color engine | chroma.js 2 | Armonías HSL · contraste WCAG · conversiones |
+| Build | Vite 5 + adapter-static | HTML/CSS/JS puro — deploy en cualquier host |
+| Desktop/Mobile | Tauri 2.0 | APK Android · .exe Windows |
+| CI/CD | GitHub Actions | Compilación automática del AAB en la nube |
+| Deploy | Vercel | Web en producción con SSL automático |
+| Persistencia | localStorage | Sin backend · datos solo en tu dispositivo |
+
+---
+
+## ✦ Estructura del proyecto
 
 ```
-chromacraft/
+iyiris/
 ├── src/
-│   ├── app.html                    # Template HTML (carga fuentes Google)
-│   ├── app.css                     # Tailwind + clases globales + grain
-│   │
 │   ├── lib/
 │   │   ├── utils/
-│   │   │   ├── colorUtils.ts       # Generación de paletas con chroma.js
-│   │   │   ├── contrast.ts         # Cálculo WCAG AA/AAA
-│   │   │   ├── colorblind.ts       # Matrices de simulación de daltonismo
-│   │   │   └── export.ts           # CSS / Tailwind / JSON / TSV
-│   │   │
+│   │   │   ├── colorUtils.ts          ← Paletas · chroma.js · CMYK
+│   │   │   ├── contrast.ts            ← WCAG 2.1 AA / AAA
+│   │   │   ├── colorblind.ts          ← Matrices Brettel / Viénot
+│   │   │   └── export.ts              ← CSS · Tailwind · JSON · TSV
 │   │   ├── stores/
-│   │   │   └── palette.ts          # Estado global + localStorage
-│   │   │
+│   │   │   └── palette.ts             ← Estado global · localStorage
 │   │   └── components/
-│   │       ├── ColorInput.svelte       # Picker + texto + presets
-│   │       ├── ColorChip.svelte        # Chip reutilizable con copy
-│   │       ├── PaletteDisplay.svelte   # Las 4 armonías en grid
-│   │       ├── ContrastChecker.svelte  # WCAG en tiempo real
+│   │       ├── ColorInput.svelte      ← Picker · HEX · presets
+│   │       ├── ColorChip.svelte       ← Chip con copy HEX/RGB/HSL/CMYK
+│   │       ├── PaletteDisplay.svelte  ← 4 tipos de armonías
+│   │       ├── ContrastChecker.svelte ← Ratio WCAG en tiempo real
 │   │       ├── ColorblindSimulator.svelte
-│   │       ├── UIPreview.svelte        # Mockup claro/oscuro
-│   │       ├── ExportPanel.svelte      # Código exportable
-│   │       └── FavoritesSidebar.svelte # Gestión de favoritos
-│   │
+│   │       ├── UIPreview.svelte       ← Mockup claro / oscuro
+│   │       ├── ExportPanel.svelte     ← Código exportable + descarga
+│   │       └── FavoritesSidebar.svelte
 │   └── routes/
-│       ├── +layout.svelte          # Import CSS global
-│       └── +page.svelte            # Shell principal (sidebar + tabs)
-│
-├── tailwind.config.js
-├── svelte.config.js
-├── vite.config.ts
-├── tsconfig.json
-└── package.json
+│       └── +page.svelte               ← Shell principal
+├── src-tauri/                         ← Tauri 2.0 (Android / Desktop)
+├── .github/workflows/                 ← GitHub Actions (AAB automático)
+└── static/                            ← Assets públicos
 ```
 
 ---
 
-## Roadmap
+## ✦ Roadmap
 
 | Fase | Estado | Descripción |
-|------|--------|-------------|
-| **1 — Web** | ✅ Completa | SvelteKit + Tailwind + chroma.js |
-| **2 — Desktop** | ⏳ Pendiente | Empaquetado con Tauri 2.0 → `.exe` / `.dmg` |
-| **3 — Mobile** | ⏳ Pendiente | Tauri 2.0 Mobile → `.apk` Android |
+|---|:---:|---|
+| Web — SvelteKit | ✅ | Completa y desplegada en Vercel |
+| Mobile — Android | ✅ | AAB compilado con Tauri 2.0 + GitHub Actions |
+| Desktop — Windows | 🔜 | `.exe` con Tauri 2.0 |
+| Desktop — macOS | 🔜 | `.dmg` con Tauri 2.0 |
+| Play Store | 🔜 | Publicación en Google Play |
 
 ---
 
-## Notas de diseño
+<div align="center">
 
-- **Sin backend**: toda la lógica corre en el navegador
-- **localStorage key**: `chromacraft_v1_palettes`
-- Las matrices de daltonismo están basadas en Brettel (1997) / Viénot (1999)
-- El contraste usa la fórmula oficial WCAG 2.1 a través de `chroma.contrast()`
+<img src="Assets/iyiris-readme.png" alt="iyiris" width="60" />
+
+<br/>
+
+*Construido con TypeScript · Svelte · chroma.js · Tauri 2.0*
+
+**[iyiris.vercel.app](https://palert-mocha.vercel.app)** · **[GitHub](https://github.com/JuanEstebanHerreraH/Iyiris)**
+
+</div>
