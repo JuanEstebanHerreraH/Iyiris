@@ -74,7 +74,7 @@ jobs:
 
       # ── Build AAB firmado ──────────────────────────────────────────────────
       - name: Build Android AAB (release)
-        run: cargo tauri android build --target aarch64-linux-android
+        run: cargo tauri android build --target aarch64
 
       # ── Sube el AAB como artefacto ─────────────────────────────────────────
       - name: Upload AAB
