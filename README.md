@@ -12,7 +12,7 @@
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/▶%20DEMO%20EN%20VIVO-palert--mocha.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://iyiris-mocha.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/▶%20DEMO%20EN%20VIVO-Iyiris--mocha.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://iyiris-mocha.vercel.app/)
 [![GitHub](https://img.shields.io/badge/CÓDIGO-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JuanEstebanHerreraH/Iyiris)
 
 <br/>
