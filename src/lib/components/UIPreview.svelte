@@ -19,29 +19,21 @@
   $: onDark      = getContrastColor(dark);
 
   let activeTab: 'light' | 'dark' = 'light';
-
-  function tabClass(t: string) {
-    return activeTab === t
-      ? 'bg-white text-black font-semibold shadow-sm'
-      : 'text-muted hover:text-text';
-  }
-
-  function setTab(t: string) {
-    if (t === 'light' || t === 'dark') activeTab = t;
-  }
 </script>
 
 <div class="space-y-5 animate-fade-in">
   <!-- Theme switch -->
   <div class="flex items-center gap-1 bg-surface border border-border rounded-xl p-1 w-fit">
-    {#each ['light', 'dark'] as t}
-      <button
-        class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all {tabClass(t)}"
-        on:click={() => setTab(t)}
-      >
-        {t === 'light' ? '☀ Claro' : '☾ Oscuro'}
-      </button>
-    {/each}
+    <button
+      class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all"
+      style={activeTab === 'light' ? 'background:white; color:black;' : 'color: var(--color-muted, #888);'}
+      on:click={() => (activeTab = 'light')}
+    >☀ Claro</button>
+    <button
+      class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all"
+      style={activeTab === 'dark' ? 'background:white; color:black;' : 'color: var(--color-muted, #888);'}
+      on:click={() => (activeTab = 'dark')}
+    >☾ Oscuro</button>
   </div>
 
   <!-- ─── LIGHT THEME PREVIEW ──────────────────────────────────────────── -->

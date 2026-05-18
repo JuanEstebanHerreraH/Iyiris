@@ -5,42 +5,34 @@
   import type { ColorPalette } from '$lib/utils/colorUtils';
 
   export let palette: ColorPalette;
-
   const dispatch = createEventDispatcher<{ change: string }>();
 
-  let hexInput = '';
-  let rInput = ''; let gInput = ''; let bInput = '';
-  let hInput = ''; let sInput = ''; let lInput = '';
-  let cInput = ''; let mInput = ''; let yInput = ''; let kInput = '';
-
-  let hexError  = false;
-  let rgbError  = false;
-  let hslError  = false;
-  let cmykError = false;
+  let hexInput = ''; let hexError = false;
+  let rInput = ''; let gInput = ''; let bInput = ''; let rgbError = false;
+  let hInput = ''; let sInput = ''; let lInput = ''; let hslError = false;
+  let cInput = ''; let mInput = ''; let yInput = ''; let kInput = ''; let cmykError = false;
 
   let focused: 'hex' | 'rgb' | 'hsl' | 'cmyk' | null = null;
 
-  $: if (palette) syncFromPalette(palette);
-
-  function syncFromPalette(p: ColorPalette) {
-    if (focused !== 'hex') { hexInput = p.base.hex.toUpperCase(); hexError = false; }
-    if (focused !== 'rgb') { [rInput, gInput, bInput] = p.base.rgb.map(String); rgbError = false; }
+  // Solo sincroniza cuando cambia la paleta Y el campo no está en foco
+  let lastHex = '';
+  $: if (palette && palette.base.hex !== lastHex) {
+    lastHex = palette.base.hex;
+    if (focused !== 'hex') { hexInput = palette.base.hex.toUpperCase(); hexError = false; }
+    if (focused !== 'rgb') { [rInput, gInput, bInput] = palette.base.rgb.map(String); rgbError = false; }
     if (focused !== 'hsl') {
-      const [h, s, l] = p.base.hsl;
-      hInput = String(h);
-      sInput = String(Math.round(s * 100));
-      lInput = String(Math.round(l * 100));
+      const [h, s, l] = palette.base.hsl;
+      hInput = String(h); sInput = String(Math.round(s * 100)); lInput = String(Math.round(l * 100));
       hslError = false;
     }
     if (focused !== 'cmyk') {
-      const cmyk = rgbToCMYK(p.base.rgb);
-      [cInput, mInput, yInput, kInput] = cmyk.map(String);
-      cmykError = false;
+      const cmyk = rgbToCMYK(palette.base.rgb);
+      [cInput, mInput, yInput, kInput] = cmyk.map(String); cmykError = false;
     }
   }
 
   function onHexInput(e: Event) {
-    let raw = (e.target as HTMLInputElement).value;
+    const raw = (e.target as HTMLInputElement).value;
     hexInput = raw;
     let hex = raw.trim();
     if (!hex.startsWith('#')) hex = '#' + hex;
@@ -85,9 +77,9 @@
 
     <!-- HEX -->
     <div class="color-row" class:error={hexError}>
-      <span class="row-label">HEX</span>
+      <span class="lbl">HEX</span>
       <input class="row-input" type="text" maxlength={7} spellcheck={false}
-        bind:value={hexInput}
+        value={hexInput}
         on:input={onHexInput}
         on:focus={() => (focused = 'hex')}
         on:blur={() => (focused = null)}
@@ -96,40 +88,40 @@
 
     <!-- RGB -->
     <div class="color-row" class:error={rgbError}>
-      <span class="row-label">RGB</span>
-      <div class="flex gap-1 flex-1 justify-end">
-        <input class="channel-input" type="number" min="0" max="255"
-          bind:value={rInput} on:input={onRgbInput}
-          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="Red" />
-        <input class="channel-input" type="number" min="0" max="255"
-          bind:value={gInput} on:input={onRgbInput}
-          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="Green" />
-        <input class="channel-input" type="number" min="0" max="255"
-          bind:value={bInput} on:input={onRgbInput}
-          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="Blue" />
+      <span class="lbl">RGB</span>
+      <div class="ch-group">
+        <input class="ch" type="number" min="0" max="255" value={rInput}
+          on:input={(e) => { rInput = (e.target as HTMLInputElement).value; onRgbInput(); }}
+          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="R" />
+        <input class="ch" type="number" min="0" max="255" value={gInput}
+          on:input={(e) => { gInput = (e.target as HTMLInputElement).value; onRgbInput(); }}
+          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="G" />
+        <input class="ch" type="number" min="0" max="255" value={bInput}
+          on:input={(e) => { bInput = (e.target as HTMLInputElement).value; onRgbInput(); }}
+          on:focus={() => (focused = 'rgb')} on:blur={() => (focused = null)} title="B" />
       </div>
     </div>
 
     <!-- HSL -->
     <div class="color-row" class:error={hslError}>
-      <span class="row-label">HSL</span>
-      <div class="flex gap-1 flex-1 justify-end items-center">
-        <div class="relative">
-          <input class="channel-input w-14" type="number" min="0" max="360"
-            bind:value={hInput} on:input={onHslInput}
-            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="Hue" />
+      <span class="lbl">HSL</span>
+      <div class="ch-group">
+        <div class="rel">
+          <input class="ch w14" type="number" min="0" max="360" value={hInput}
+            on:input={(e) => { hInput = (e.target as HTMLInputElement).value; onHslInput(); }}
+            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="H" />
           <span class="unit">°</span>
         </div>
-        <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
-            bind:value={sInput} on:input={onHslInput}
-            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="Saturation" />
+        <div class="rel">
+          <input class="ch w12" type="number" min="0" max="100" value={sInput}
+            on:input={(e) => { sInput = (e.target as HTMLInputElement).value; onHslInput(); }}
+            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="S" />
           <span class="unit">%</span>
         </div>
-        <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
-            bind:value={lInput} on:input={onHslInput}
-            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="Lightness" />
+        <div class="rel">
+          <input class="ch w12" type="number" min="0" max="100" value={lInput}
+            on:input={(e) => { lInput = (e.target as HTMLInputElement).value; onHslInput(); }}
+            on:focus={() => (focused = 'hsl')} on:blur={() => (focused = null)} title="L" />
           <span class="unit">%</span>
         </div>
       </div>
@@ -137,30 +129,30 @@
 
     <!-- CMYK -->
     <div class="color-row" class:error={cmykError}>
-      <span class="row-label">CMYK</span>
-      <div class="flex gap-0.5 flex-1 justify-end items-center">
-        <div class="relative">
-          <input class="cmyk-input" type="number" min="0" max="100"
-            bind:value={cInput} on:input={onCmykInput}
-            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Cyan" />
+      <span class="lbl">CMYK</span>
+      <div class="ch-group">
+        <div class="rel">
+          <input class="ch cmyk" type="number" min="0" max="100" value={cInput}
+            on:input={(e) => { cInput = (e.target as HTMLInputElement).value; onCmykInput(); }}
+            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="C" />
           <span class="unit">%</span>
         </div>
-        <div class="relative">
-          <input class="cmyk-input" type="number" min="0" max="100"
-            bind:value={mInput} on:input={onCmykInput}
-            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Magenta" />
+        <div class="rel">
+          <input class="ch cmyk" type="number" min="0" max="100" value={mInput}
+            on:input={(e) => { mInput = (e.target as HTMLInputElement).value; onCmykInput(); }}
+            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="M" />
           <span class="unit">%</span>
         </div>
-        <div class="relative">
-          <input class="cmyk-input" type="number" min="0" max="100"
-            bind:value={yInput} on:input={onCmykInput}
-            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Yellow" />
+        <div class="rel">
+          <input class="ch cmyk" type="number" min="0" max="100" value={yInput}
+            on:input={(e) => { yInput = (e.target as HTMLInputElement).value; onCmykInput(); }}
+            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Y" />
           <span class="unit">%</span>
         </div>
-        <div class="relative">
-          <input class="cmyk-input" type="number" min="0" max="100"
-            bind:value={kInput} on:input={onCmykInput}
-            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Key/Black" />
+        <div class="rel">
+          <input class="ch cmyk" type="number" min="0" max="100" value={kInput}
+            on:input={(e) => { kInput = (e.target as HTMLInputElement).value; onCmykInput(); }}
+            on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="K" />
           <span class="unit">%</span>
         </div>
       </div>
@@ -171,54 +163,40 @@
 
 <style>
   .color-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.5rem;
-    background-color: rgb(0 0 0 / 0.4);
-    border: 1px solid var(--color-border, rgb(255 255 255 / 0.08));
-    gap: 0.5rem;
-    transition: border-color 0.15s;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.35rem 0.6rem; border-radius: 0.5rem;
+    background: rgb(0 0 0 / 0.4);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    gap: 0.4rem; transition: border-color 0.15s;
   }
-  .color-row:focus-within { border-color: rgb(255 255 255 / 0.2); }
+  .color-row:focus-within { border-color: rgb(255 255 255 / 0.22); }
   .color-row.error { border-color: rgb(239 68 68 / 0.5); }
-  .row-label {
-    font-size: 0.65rem;
-    color: var(--color-muted, rgb(255 255 255 / 0.4));
-    flex-shrink: 0;
-    letter-spacing: 0.05em;
-  }
+
+  .lbl { font-size: 0.6rem; color: rgb(255 255 255 / 0.38); flex-shrink: 0; letter-spacing: 0.06em; }
+
   .row-input {
     background: transparent; border: none; outline: none;
-    font-family: inherit; font-size: 0.7rem;
-    color: var(--color-text, #e2e2e2);
+    font-family: inherit; font-size: 0.7rem; color: #e2e2e2;
     text-align: right; width: 100%; min-width: 0;
   }
-  .channel-input {
+
+  .ch-group { display: flex; gap: 0.25rem; align-items: center; flex: 1; justify-content: flex-end; }
+
+  .rel { position: relative; }
+
+  .ch {
     background: transparent; border: none; outline: none;
-    font-family: inherit; font-size: 0.7rem;
-    color: var(--color-text, #e2e2e2);
-    text-align: right; width: 2.6rem;
-    -moz-appearance: textfield;
-    padding-right: 1rem;
+    font-family: inherit; font-size: 0.68rem; color: #e2e2e2;
+    text-align: right; width: 2.4rem;
+    -moz-appearance: textfield; padding-right: 0.85rem;
   }
-  .channel-input::-webkit-outer-spin-button,
-  .channel-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  .cmyk-input {
-    background: transparent; border: none; outline: none;
-    font-family: inherit; font-size: 0.65rem;
-    color: var(--color-text, #e2e2e2);
-    text-align: right; width: 2rem;
-    -moz-appearance: textfield;
-    padding-right: 0.8rem;
-  }
-  .cmyk-input::-webkit-outer-spin-button,
-  .cmyk-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  .relative { position: relative; }
+  .ch.w14 { width: 2.8rem; }
+  .ch.w12 { width: 2.2rem; }
+  .ch.cmyk { width: 1.9rem; padding-right: 0.75rem; font-size: 0.62rem; }
+  .ch::-webkit-outer-spin-button, .ch::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
   .unit {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-    font-size: 0.65rem; color: var(--color-muted, rgb(255 255 255 / 0.35));
-    pointer-events: none;
+    font-size: 0.58rem; color: rgb(255 255 255 / 0.3); pointer-events: none;
   }
 </style>
