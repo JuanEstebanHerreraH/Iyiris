@@ -22,7 +22,7 @@
 
   function tabClass(t: string) {
     return activeTab === t
-      ? 'bg-white/10 text-text'
+      ? 'bg-white text-black font-semibold shadow-sm'
       : 'text-muted hover:text-text';
   }
 

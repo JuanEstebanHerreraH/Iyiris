@@ -138,27 +138,27 @@
     <!-- CMYK -->
     <div class="color-row" class:error={cmykError}>
       <span class="row-label">CMYK</span>
-      <div class="flex gap-1 flex-1 justify-end items-center">
+      <div class="flex gap-0.5 flex-1 justify-end items-center">
         <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
+          <input class="cmyk-input" type="number" min="0" max="100"
             bind:value={cInput} on:input={onCmykInput}
             on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Cyan" />
           <span class="unit">%</span>
         </div>
         <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
+          <input class="cmyk-input" type="number" min="0" max="100"
             bind:value={mInput} on:input={onCmykInput}
             on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Magenta" />
           <span class="unit">%</span>
         </div>
         <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
+          <input class="cmyk-input" type="number" min="0" max="100"
             bind:value={yInput} on:input={onCmykInput}
             on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Yellow" />
           <span class="unit">%</span>
         </div>
         <div class="relative">
-          <input class="channel-input w-12" type="number" min="0" max="100"
+          <input class="cmyk-input" type="number" min="0" max="100"
             bind:value={kInput} on:input={onCmykInput}
             on:focus={() => (focused = 'cmyk')} on:blur={() => (focused = null)} title="Key/Black" />
           <span class="unit">%</span>
@@ -205,6 +205,16 @@
   }
   .channel-input::-webkit-outer-spin-button,
   .channel-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .cmyk-input {
+    background: transparent; border: none; outline: none;
+    font-family: inherit; font-size: 0.65rem;
+    color: var(--color-text, #e2e2e2);
+    text-align: right; width: 2rem;
+    -moz-appearance: textfield;
+    padding-right: 0.8rem;
+  }
+  .cmyk-input::-webkit-outer-spin-button,
+  .cmyk-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   .relative { position: relative; }
   .unit {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
