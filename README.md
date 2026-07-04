@@ -51,7 +51,6 @@
 | 📦 | **Exportar** | CSS custom properties · Tailwind config · JSON · Tabla HEX / RGB / HSL / CMYK |
 | ⭐ | **Favoritos** | Guarda y carga paletas entre sesiones — sin servidor, solo `localStorage` |
 | 📱 | **Responsive** | Diseñado para desktop y móvil |
-| 📲 | **App Android** | APK compilado con Tauri 2.0 via GitHub Actions |
 
 ---
 
