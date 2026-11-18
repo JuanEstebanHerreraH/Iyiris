@@ -1,42 +1,19 @@
-<div align="center">
+# Iyiris
 
-<img src="Assets/iyiris-readme.png" alt="iyiris" width="160" />
+**Paletas de color, contraste y exportación para diseñar interfaces.**
 
-<br/>
+Genera armonías desde un color base, compara contraste, explora simulaciones de daltonismo y exporta a CSS, Tailwind o JSON.
 
-# iyiris
+**[Probar la web](https://iyiris-mocha.vercel.app/) · [Reportar un problema](https://github.com/JuanEstebanHerreraH/Iyiris/issues)**
 
-**Herramienta profesional de diseño de paletas de color**
+SvelteKit · TypeScript · chroma.js. Las paletas y preferencias se trabajan en el navegador, sin un backend de cuentas.
 
-*Colores para todos — sin backend, sin cuenta, sin límites*
+**Decisión de implementación:** combina generación de color y comprobación de contraste con una vista previa de componentes para evaluar la paleta en contexto.
 
-<br/>
+**Alcance:** el contraste de un par de colores y las simulaciones son ayudas de diseño; no certifican la accesibilidad completa de una interfaz.
 
-[![Live Demo](https://img.shields.io/badge/▶%20DEMO%20EN%20VIVO-Iyiris--mocha.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://iyiris-mocha.vercel.app/)
-[![GitHub](https://img.shields.io/badge/CÓDIGO-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JuanEstebanHerreraH/Iyiris)
-
-<br/>
-
-![SvelteKit](https://img.shields.io/badge/SvelteKit_2.0-FF3E00?style=flat-square&logo=svelte&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript_5.0-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind_3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Tauri](https://img.shields.io/badge/Tauri_2.0-24C8D8?style=flat-square&logo=tauri&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
-![No backend](https://img.shields.io/badge/Sin_backend-10B981?style=flat-square&logoColor=white)
-
-</div>
-
----
-
-<div align="center">
-
-### ¿Qué es iyiris?
-
-</div>
-
-**iyiris** toma un color base y genera al instante paletas armónicas, verifica accesibilidad WCAG, simula visión con daltonismo y exporta todo listo para producción. Corre completamente en el navegador — ningún dato sale de tu dispositivo.
-
----
+<details>
+<summary><strong>Funciones, requisitos y documentación técnica</strong></summary>
 
 ## ✦ Características
 
@@ -152,3 +129,5 @@ iyiris/
 **[iyiris.vercel.app](https://palert-mocha.vercel.app)** · **[GitHub](https://github.com/JuanEstebanHerreraH/Iyiris)**
 
 </div>
+
+</details>
